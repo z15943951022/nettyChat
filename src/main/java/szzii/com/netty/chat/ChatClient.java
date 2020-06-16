@@ -10,7 +10,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.util.CharsetUtil;
+import org.apache.commons.lang3.CharUtils;
 
+import java.nio.charset.Charset;
 import java.util.Scanner;
 
 /**
@@ -37,8 +40,8 @@ public class ChatClient {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline()
-                                    .addLast(new StringEncoder())
-                                    .addLast(new StringDecoder())
+                                    .addLast(new StringEncoder(Charset.forName("GBK")))
+                                    .addLast(new StringDecoder(Charset.forName("GBK")))
                                     .addLast(new ChatClientHandler());
                         }
                     });
@@ -62,6 +65,6 @@ public class ChatClient {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        new ChatClient("localhost",6669).run();
+        new ChatClient("szzii.com",6669).run();
     }
 }

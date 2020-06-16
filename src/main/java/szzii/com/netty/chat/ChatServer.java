@@ -12,6 +12,7 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,8 +39,8 @@ public class ChatServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new StringDecoder())
-                                    .addLast(new StringEncoder())
+                            ch.pipeline().addLast(new StringDecoder(Charset.forName("GBK")))
+                                    .addLast(new StringEncoder(Charset.forName("GBK")))
                                     .addLast(new IdleStateHandler(0,0,1, TimeUnit.HOURS))
                                     .addLast(new ChatServerHandler());
                         }
